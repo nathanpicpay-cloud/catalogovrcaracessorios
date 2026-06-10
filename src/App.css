@@ -541,6 +541,24 @@
   color: white;
 }
 
+.close-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.close-btn:hover {
+  background: var(--neon-red);
+}
+
 .cart-body {
   flex: 1;
   overflow-y: auto;
