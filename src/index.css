@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --bg-color: #050505;
+  --surface-color: rgba(20, 20, 20, 0.6);
+  --surface-border: rgba(255, 40, 40, 0.15);
+  
+  --neon-red: #ff1e1e;
+  --neon-red-glow: rgba(255, 30, 30, 0.6);
+  --neon-red-dim: rgba(255, 30, 30, 0.15);
+  
+  --text-primary: #ffffff;
+  --text-secondary: #aaaaaa;
+  
+  --glass-bg: rgba(15, 15, 15, 0.7);
+  --glass-blur: blur(12px);
+  
+  --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Outfit', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-image: 
+    radial-gradient(circle at 15% 50%, var(--neon-red-dim), transparent 25%),
+    radial-gradient(circle at 85% 30%, var(--neon-red-dim), transparent 25%);
+  background-attachment: fixed;
+}
+
+/* Glassmorphism Utilities */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--surface-border);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+/* Base Styles */
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--neon-red);
+}
+
+/* Neon Glow Effect */
+.neon-text {
+  color: var(--text-primary);
+  text-shadow: 0 0 10px var(--neon-red-glow);
+}
+
+.neon-border {
+  border: 1px solid var(--neon-red);
+  box-shadow: 0 0 10px var(--neon-red-dim), inset 0 0 10px var(--neon-red-dim);
+}
+
+.neon-border:hover {
+  box-shadow: 0 0 20px var(--neon-red-glow), inset 0 0 15px var(--neon-red-dim);
+}
