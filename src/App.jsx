@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import './App.css';
 import productsData from './data/products.json';
 import { 
@@ -55,6 +55,7 @@ function App() {
       }
       return [...prev, { ...product, quantity: 1 }];
     });
+    setIsCartOpen(true);
   };
 
   const updateQuantity = (id, delta) => {
