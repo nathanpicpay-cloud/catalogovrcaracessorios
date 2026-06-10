@@ -131,6 +131,12 @@
   gap: 0.8rem;
   overflow-x: auto;
   padding-bottom: 0.5rem;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+.category-filters::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
 }
 
 .filter-btn {
@@ -640,13 +646,38 @@
 }
 
 @media (max-width: 768px) {
+  /* Product Grid em 2 colunas no celular */
   .product-grid {
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 1rem;
+  }
+  
+  .product-content {
+    padding: 1rem;
+  }
+
+  .product-title {
+    font-size: 0.95rem;
+  }
+
+  .product-price {
+    font-size: 1.1rem;
+  }
+  
+  .product-icon-container {
+    height: 120px;
+  }
+  
+  /* Ajustes na barra superior */
+  .header {
+    padding: 1rem;
   }
   
   .controls-bar {
     flex-direction: column;
     align-items: stretch;
+    padding: 1rem;
+    gap: 1rem;
   }
   
   .search-wrapper {
@@ -657,7 +688,53 @@
     grid-template-columns: 1fr;
   }
   
+  /* Botão do carrinho como FAB (Floating Action Button) no Android */
+  .cart-button {
+    position: fixed;
+    bottom: 2rem;
+    right: 1.5rem;
+    z-index: 900;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    padding: 0;
+    justify-content: center;
+    background: var(--neon-red);
+    box-shadow: 0 5px 20px rgba(255, 30, 30, 0.4);
+  }
+  
   .cart-text-btn {
     display: none;
+  }
+  
+  .cart-badge {
+    top: 0px;
+    right: 0px;
+    width: 20px;
+    height: 20px;
+    font-size: 0.7rem;
+    border: 2px solid var(--bg-color);
+  }
+
+  /* Carrinho em Tela Cheia no Android */
+  .cart-modal {
+    max-width: 100%;
+    border-left: none;
+  }
+  
+  /* Bottom Sheet Modal para os Detalhes do Produto */
+  .modal-overlay {
+    align-items: flex-end; /* Alinha o modal na base da tela */
+    padding: 0;
+  }
+  
+  .modal-content {
+    border-radius: 24px 24px 0 0;
+    max-height: 85vh;
+    transform: translateY(100%);
+  }
+  
+  .modal-overlay.open .modal-content {
+    transform: translateY(0);
   }
 }
