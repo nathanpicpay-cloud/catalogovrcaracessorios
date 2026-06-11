@@ -80,25 +80,19 @@ function App() {
     setCart(prev => prev.filter(item => item.id !== id));
   };
 
-  const cartTotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
   const cartItemsCount = cart.reduce((count, item) => count + item.quantity, 0);
-
-  // Format currency
-  const formatPrice = (price) => {
-    return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(price);
-  };
 
   // Send to WhatsApp
   const sendToWhatsApp = () => {
     if (cart.length === 0) return;
     
-    let message = `*Olá! Gostaria de fazer o pedido dos seguintes itens da VR Car:*%0A%0A`;
+    let message = `*Olá! Gostaria de fazer o orçamento/pedido dos seguintes itens da VR Car:*%0A%0A`;
     
     cart.forEach((item, index) => {
-      message += `${index + 1}. ${item.name} (Qtd: ${item.quantity}) - ${formatPrice(item.price * item.quantity)}%0A`;
+      message += `${index + 1}. ${item.name} (Qtd: ${item.quantity})%0A`;
     });
     
-    message += `%0A*Valor Total Aproximado: ${formatPrice(cartTotal)}*%0A%0AAguardo retorno para finalizar o pedido, obrigado!`;
+    message += `%0AAguardo retorno para obter o orçamento e finalizar o pedido, obrigado!`;
     
     // VR Car's WhatsApp number
     const phoneNumber = "5575992537557"; 
@@ -172,13 +166,11 @@ function App() {
                   <p className="product-desc line-clamp">{product.description}</p>
                   
                   <div className="product-footer">
-                    <div className="product-price">
-                      <span>R$</span>{product.price.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-                    </div>
                     <button 
                       className="add-to-cart-btn" 
                       onClick={(e) => addToCart(product, e)}
                       title="Adicionar ao Carrinho"
+                      style={{ marginLeft: 'auto' }}
                     >
                       <Plus size={20} />
                     </button>
@@ -211,7 +203,6 @@ function App() {
             <div className="modal-body">
               <div className="modal-badge">{selectedProduct.category}</div>
               <h2 className="modal-title">{selectedProduct.name}</h2>
-              <div className="modal-price">{formatPrice(selectedProduct.price)}</div>
               
               <div className="modal-desc-box">
                 <p>{selectedProduct.description}</p>
@@ -270,7 +261,6 @@ function App() {
                   </div>
                   <div className="cart-item-details">
                     <div className="cart-item-title">{item.name}</div>
-                    <div className="cart-item-price">{formatPrice(item.price)}</div>
                     
                     <div className="cart-item-actions">
                       <button className="qty-btn" onClick={() => updateQuantity(item.id, -1)}>
@@ -293,11 +283,6 @@ function App() {
           
           {cart.length > 0 && (
             <div className="cart-footer">
-              <div className="cart-total">
-                <span>Total Aproximado:</span>
-                <span className="neon-text">{formatPrice(cartTotal)}</span>
-              </div>
-              
               <button className="whatsapp-btn" onClick={sendToWhatsApp}>
                 <Send size={20} />
                 Solicitar via WhatsApp
