@@ -352,7 +352,6 @@ function App() {
                 
                 <div className="product-content">
                   <h3 className="product-title">{product.name}</h3>
-                  <p className="product-desc line-clamp">{product.description}</p>
                   
                   <div className="product-footer">
                     <span className="product-price-placeholder">Sob Consulta</span>

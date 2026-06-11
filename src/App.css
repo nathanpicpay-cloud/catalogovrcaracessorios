@@ -1369,21 +1369,24 @@
 /* Toast Notification */
 .toast-notification {
   position: fixed;
-  bottom: 2rem;
-  left: 2rem;
+  top: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
   background: var(--brand-dark);
   color: white;
   padding: 1rem 1.5rem;
   border-radius: 8px;
   box-shadow: var(--shadow-lg);
   z-index: 1001;
-  max-width: 320px;
-  animation: slideUp 0.3s ease;
+  width: 90%;
+  max-width: 400px;
+  animation: slideDown 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  border-left: 4px solid var(--brand-red);
 }
 
-@keyframes slideUp {
-  from { transform: translateY(20px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+@keyframes slideDown {
+  from { transform: translate(-50%, -20px); opacity: 0; }
+  to { transform: translate(-50%, 0); opacity: 1; }
 }
 
 .toast-message {
