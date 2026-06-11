@@ -4,7 +4,9 @@ import productsData from './data/products.json';
 import { 
   ShoppingCart, Search, Wrench, X, Plus, Minus, Trash2, Send,
   Settings, Disc, Circle, CircleDashed, Nut, Droplet, 
-  Tag, Info, Hexagon, Component, Layers
+  Tag, Info, Hexagon, Component, Layers, ChevronDown, ChevronUp,
+  MessageCircle, HelpCircle, ArrowRight, Truck, ClipboardList, CheckCircle2,
+  Mail, Phone, MapPin
 } from 'lucide-react';
 
 // Helper component for category icons
@@ -32,12 +34,36 @@ function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [toast, setToast] = useState(null);
+  const [openFaq, setOpenFaq] = useState(null);
 
   const toastMessages = [
     "Ótima escolha! Que tal adicionar mais produtos para ter descontos?",
     "Excelente item! Adicione mais produtos e garanta uma oferta especial.",
     "Muito bem! Peça mais itens para termos mais flexibilidade no orçamento.",
     "Produto adicionado! Fale conosco no WhatsApp para negociar preços especiais."
+  ];
+
+  const faqs = [
+    {
+      q: "TEM LOJA FÍSICA?",
+      a: "Sim! Nossa loja física e centro de distribuição fica em Feira de Santana - BA, com atendimento presencial e retirada de mercadorias após a confirmação do pedido."
+    },
+    {
+      q: "ENTREGAM PARA OUTROS ESTADOS?",
+      a: "Sim, realizamos envios para todo o Brasil através de transportadoras parceiras e Correios. O frete é calculado de acordo com a cubagem e peso dos produtos."
+    },
+    {
+      q: "TEM PRONTA ENTREGA?",
+      a: "Sim, a grande maioria dos nossos produtos está disponível para pronta entrega imediata."
+    },
+    {
+      q: "COMO FAÇO O PAGAMENTO?",
+      a: "Aceitamos Pix, transferências bancárias, cartões de crédito e faturamento para empresas parceiras mediante análise de cadastro."
+    },
+    {
+      q: "OS PRODUTOS TÊM GARANTIA?",
+      a: "Sim, todos os nossos equipamentos e acessórios contam com garantia legal contra defeitos de fabricação."
+    }
   ];
 
   useEffect(() => {
@@ -63,7 +89,7 @@ function App() {
   // Extract unique categories
   const categories = ['Todos', ...new Set(productsData.map(p => p.category))];
 
-  // Filter and sort products (Group by category, then sort by name)
+  // Filter and sort products
   const filteredProducts = useMemo(() => {
     const filtered = productsData.filter(product => {
       const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
@@ -123,34 +149,164 @@ function App() {
     
     message += `%0AAguardo retorno para obter o orçamento e finalizar o pedido, obrigado!`;
     
-    // VR Car's WhatsApp number
     const phoneNumber = "5575992537557"; 
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
+  };
+
+  const quickWhatsAppMessage = (text) => {
+    const phoneNumber = "5575992537557";
+    window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(text)}`, '_blank');
+  };
+
+  const toggleFaq = (index) => {
+    setOpenFaq(openFaq === index ? null : index);
   };
 
   return (
     <div className="app-container">
       {/* Header */}
-      <header className="header glass-panel">
+      <header className="header">
         <div className="logo-container">
-          <div className="logo-icon neon-text">
-            <Wrench size={32} />
+          <div className="logo-icon">
+            <Wrench size={26} />
           </div>
-          <h1 className="logo-text">VR<span>Car</span></h1>
+          <h1 className="logo-text">VR <span>ACESSÓRIOS</span></h1>
+        </div>
+
+        <div className="nav-links-desktop">
+          <a href="#inicio">Início</a>
+          <a href="#como-funciona">Como Funciona</a>
+          <a href="#catalogo">Catálogo</a>
+          <a href="#faq">Dúvidas</a>
         </div>
         
-        <button className="cart-button desktop-cart-btn neon-border" onClick={() => setIsCartOpen(true)}>
+        <button className="cart-button desktop-cart-btn" onClick={() => setIsCartOpen(true)}>
           <ShoppingCart size={20} />
-          <span className="cart-text-btn">Carrinho</span>
+          <span className="cart-text-btn">Meu Pedido</span>
           {cartItemsCount > 0 && <span className="cart-badge">{cartItemsCount}</span>}
         </button>
       </header>
 
-      {/* Main Content */}
-      <main className="main-content">
+      {/* Hero Section */}
+      <section className="hero-section" id="inicio">
+        <div className="hero-content">
+          <div className="hero-tag">EQUIPAMENTOS & ACESSÓRIOS</div>
+          <h2 className="hero-title">
+            LINHA PREMIUM <br />
+            PARA O SEU <span>CARRO</span>
+          </h2>
+          <p className="hero-subtitle">
+            O catálogo completo de acessórios para rodas esportivas e material para alinhamento e balanceamento profissional.
+          </p>
+          <div className="hero-buttons">
+            <a href="#catalogo" className="btn-hero-primary">
+              VER CATÁLOGO <ArrowRight size={18} />
+            </a>
+            <button 
+              onClick={() => quickWhatsAppMessage("Olá! Vim do catálogo e gostaria de falar com um atendente.")} 
+              className="btn-hero-secondary"
+            >
+              <MessageCircle size={18} /> PEDIR NO WHATSAPP
+            </button>
+          </div>
+          
+          <div className="hero-bullets">
+            <div className="bullet-item">
+              <span className="bullet-dot"></span> Pronta entrega rápida
+            </div>
+            <div className="bullet-item">
+              <span className="bullet-dot"></span> Equipamentos com garantia
+            </div>
+          </div>
+        </div>
+
+        <div className="hero-visual">
+          <div className="visual-circle"></div>
+          <div className="visual-image-placeholder">
+            <Wrench size={100} className="visual-icon" />
+            <div className="visual-badge-premium">PREMIUM QUALITY</div>
+          </div>
+        </div>
+      </section>
+
+      {/* Como Funciona Section */}
+      <section className="how-it-works" id="como-funciona">
+        <div className="section-header">
+          <h2 className="section-title">COMO <span>FUNCIONA</span></h2>
+          <p className="section-subtitle">
+            Processo simplificado para você equipar seu veículo ou oficina com rapidez e segurança.
+          </p>
+        </div>
+
+        <div className="steps-grid">
+          <div className="step-card">
+            <div className="step-num">01</div>
+            <div className="step-icon-container">
+              <Search size={24} />
+            </div>
+            <h3 className="step-title">ESCOLHA OS ITENS</h3>
+            <p className="step-desc">
+              Navegue pelo nosso catálogo abaixo e adicione os itens desejados ao seu pedido.
+            </p>
+          </div>
+
+          <div className="step-card">
+            <div className="step-num">02</div>
+            <div className="step-icon-container">
+              <MessageCircle size={24} />
+            </div>
+            <h3 className="step-title">ENVIE NO WHATSAPP</h3>
+            <p className="step-desc">
+              Finalize enviando a lista diretamente para nosso atendimento no WhatsApp com um clique.
+            </p>
+          </div>
+
+          <div className="step-card">
+            <div className="step-num">03</div>
+            <div className="step-icon-container">
+              <ClipboardList size={24} />
+            </div>
+            <h3 className="step-title">RECEBA O ORÇAMENTO</h3>
+            <p className="step-desc">
+              Nossa equipe comercial te responderá com os melhores valores e opções de frete.
+            </p>
+          </div>
+
+          <div className="step-card">
+            <div className="step-num">04</div>
+            <div className="step-icon-container">
+              <Truck size={24} />
+            </div>
+            <h3 className="step-title">ENVIO OU RETIRADA</h3>
+            <p className="step-desc">
+              Seu pedido é separado e despachado ou fica pronto para retirada imediata.
+            </p>
+          </div>
+        </div>
+
+        {/* CTA Banner */}
+        <div className="cta-banner">
+          <div className="cta-banner-text">
+            <h4>PRONTO PARA COMEÇAR?</h4>
+            <p>Temos tudo o que você precisa para rodas e borracharia em um só lugar.</p>
+          </div>
+          <a href="#catalogo" className="btn-cta">
+            VER NOSSO CATÁLOGO COMPLETO
+          </a>
+        </div>
+      </section>
+
+      {/* Catalog Section */}
+      <section className="catalog-section" id="catalogo">
+        <div className="section-header">
+          <h2 className="section-title">CATÁLOGO <span>COMPLETO</span></h2>
+          <p className="section-subtitle">
+            Encontre os melhores componentes. Use os filtros abaixo para facilitar sua busca.
+          </p>
+        </div>
         
         {/* Controls */}
-        <section className="controls-bar glass-panel">
+        <div className="controls-bar">
           <div className="search-wrapper">
             <Search className="search-icon" size={20} />
             <input 
@@ -160,6 +316,11 @@ function App() {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
+            {searchTerm && (
+              <button className="clear-search-btn" onClick={() => setSearchTerm('')}>
+                <X size={16} />
+              </button>
+            )}
           </div>
           
           <div className="category-filters">
@@ -173,21 +334,21 @@ function App() {
               </button>
             ))}
           </div>
-        </section>
+        </div>
 
         {/* Product Grid */}
-        <section className="product-grid">
+        <div className="product-grid">
           {filteredProducts.length > 0 ? (
             filteredProducts.map(product => (
               <div 
                 key={product.id} 
-                className="product-card glass-panel"
+                className="product-card"
                 onClick={() => setSelectedProduct(product)}
               >
                 <div className="product-category-badge">{product.category}</div>
                 
                 <div className="product-icon-container">
-                   <CategoryIcon category={product.category} size={64} className="neon-icon-glow" />
+                   <CategoryIcon category={product.category} size={56} className="product-category-icon" />
                 </div>
                 
                 <div className="product-content">
@@ -195,13 +356,13 @@ function App() {
                   <p className="product-desc line-clamp">{product.description}</p>
                   
                   <div className="product-footer">
+                    <span className="product-price-placeholder">Sob Consulta</span>
                     <button 
                       className="add-to-cart-btn" 
                       onClick={(e) => addToCart(product, e)}
                       title="Adicionar ao Carrinho"
-                      style={{ marginLeft: 'auto' }}
                     >
-                      <Plus size={20} />
+                      <Plus size={18} /> Adicionar
                     </button>
                   </div>
                 </div>
@@ -209,24 +370,127 @@ function App() {
             ))
           ) : (
             <div className="empty-state">
-              <Search size={48} className="neon-icon-glow mb-4" />
-              <h3>Nenhum produto encontrado.</h3>
-              <p>Tente ajustar sua busca ou selecionar outra categoria.</p>
+              <Search size={48} className="empty-state-icon" />
+              <h3>NENHUM ITEM ENCONTRADO</h3>
+              <p>Tente alterar seus filtros ou busque por outro termo.</p>
+              <button 
+                className="btn-clear-filters"
+                onClick={() => {
+                  setSearchTerm('');
+                  setActiveCategory('Todos');
+                }}
+              >
+                LIMPAR TODOS OS FILTROS
+              </button>
             </div>
           )}
-        </section>
-      </main>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="faq-section" id="faq">
+        <div className="section-header">
+          <div className="faq-header-icon-wrapper">
+            <HelpCircle size={24} className="faq-header-icon" />
+          </div>
+          <h2 className="section-title">DÚVIDAS <span>FREQUENTES</span></h2>
+          <p className="section-subtitle">
+            Tudo o que você precisa saber sobre a VR Acessórios.
+          </p>
+        </div>
+
+        <div className="faq-accordion-container">
+          {faqs.map((faq, index) => {
+            const isOpen = openFaq === index;
+            return (
+              <div 
+                key={index} 
+                className={`faq-item ${isOpen ? 'active' : ''}`}
+                onClick={() => toggleFaq(index)}
+              >
+                <div className="faq-question">
+                  <span>{faq.q}</span>
+                  <span className="faq-icon-toggle">
+                    {isOpen ? <Minus size={18} /> : <Plus size={18} />}
+                  </span>
+                </div>
+                <div className="faq-answer">
+                  <p>{faq.a}</p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="footer">
+        <div className="footer-top">
+          <div className="footer-brand-col">
+            <div className="footer-logo">
+              <Wrench size={24} />
+              <span>VR ACESSÓRIOS</span>
+            </div>
+            <p className="footer-brand-desc">
+              Especialistas em acessórios para rodas esportivas, anéis centralizadores, calotas, ferramentas e equipamentos para borracharia e alinhamento em geral.
+            </p>
+            <div className="social-links">
+              <a href="#" className="social-icon">f</a>
+              <a href="#" className="social-icon">i</a>
+              <a href="#" className="social-icon">w</a>
+            </div>
+          </div>
+
+          <div className="footer-links-col">
+            <h4>NAVEGAÇÃO</h4>
+            <ul>
+              <li><a href="#inicio">Início</a></li>
+              <li><a href="#como-funciona">Como Funciona</a></li>
+              <li><a href="#catalogo">Catálogo</a></li>
+              <li><a href="#faq">Dúvidas</a></li>
+            </ul>
+          </div>
+
+          <div className="footer-contact-col">
+            <h4>CONTATO</h4>
+            <ul>
+              <li>
+                <Phone size={16} /> (75) 99253-7557
+              </li>
+              <li>
+                <MapPin size={16} /> Feira de Santana - BA
+              </li>
+              <li>
+                <Mail size={16} /> contato@vracessorios.com.br
+              </li>
+            </ul>
+          </div>
+
+          <div className="footer-newsletter-col">
+            <h4>NEWSLETTER</h4>
+            <p>Receba novidades e promoções exclusivas direto no seu e-mail.</p>
+            <form className="newsletter-form" onSubmit={(e) => e.preventDefault()}>
+              <input type="email" placeholder="Seu melhor e-mail" required />
+              <button type="submit">INSCREVER-SE</button>
+            </form>
+          </div>
+        </div>
+
+        <div className="footer-bottom">
+          <p>&copy; 2026 VR Acessórios. Todos os direitos reservados. Feito com excelência.</p>
+        </div>
+      </footer>
 
       {/* Product Details Modal */}
       {selectedProduct && (
         <div className="modal-overlay open" onClick={() => setSelectedProduct(null)}>
-          <div className="modal-content glass-panel" onClick={e => e.stopPropagation()}>
+          <div className="modal-content" onClick={e => e.stopPropagation()}>
             <button className="modal-close" onClick={() => setSelectedProduct(null)}>
               <X size={24} />
             </button>
             
             <div className="modal-header-icon">
-               <CategoryIcon category={selectedProduct.category} size={80} className="neon-icon-glow" />
+               <CategoryIcon category={selectedProduct.category} size={72} className="modal-category-icon" />
             </div>
             
             <div className="modal-body">
@@ -256,10 +520,10 @@ function App() {
                     {relatedProducts.map(p => (
                       <div 
                         key={p.id} 
-                        className="related-item glass-panel"
+                        className="related-item"
                         onClick={() => setSelectedProduct(p)}
                       >
-                        <CategoryIcon category={p.category} size={28} className="related-icon" />
+                        <CategoryIcon category={p.category} size={24} className="related-icon" />
                         <div className="related-info">
                           <span className="related-name">{p.name}</span>
                         </div>
@@ -279,7 +543,7 @@ function App() {
                    setIsCartOpen(true);
                  }}
                >
-                 <ShoppingCart size={20} /> Adicionar ao Carrinho
+                 <ShoppingCart size={20} /> Adicionar ao Pedido
                </button>
             </div>
           </div>
@@ -288,10 +552,10 @@ function App() {
 
       {/* Cart Drawer */}
       <div className={`cart-overlay ${isCartOpen ? 'open' : ''}`} onClick={() => setIsCartOpen(false)}>
-        <div className="cart-modal glass-panel" onClick={e => e.stopPropagation()}>
+        <div className="cart-modal" onClick={e => e.stopPropagation()}>
           
           <div className="cart-header">
-            <h2><ShoppingCart /> Seu Carrinho</h2>
+            <h2><ShoppingCart /> Meu Pedido</h2>
             <button className="close-btn" onClick={() => setIsCartOpen(false)}>
               <X size={24} />
             </button>
@@ -300,25 +564,26 @@ function App() {
           <div className="cart-body">
             {cart.length === 0 ? (
               <div className="empty-cart">
-                <ShoppingCart size={48} style={{ opacity: 0.2, margin: '0 auto 1rem' }} />
-                <p>Nenhum item adicionado ao carrinho.</p>
+                <ShoppingCart size={48} className="empty-cart-icon" />
+                <p>Nenhum item adicionado ao pedido.</p>
               </div>
             ) : (
               cart.map(item => (
                 <div key={item.id} className="cart-item">
                   <div className="cart-item-icon">
-                    <CategoryIcon category={item.category} size={32} />
+                    <CategoryIcon category={item.category} size={28} />
                   </div>
                   <div className="cart-item-details">
                     <div className="cart-item-title">{item.name}</div>
+                    <div className="cart-item-category">{item.category}</div>
                     
                     <div className="cart-item-actions">
                       <button className="qty-btn" onClick={() => updateQuantity(item.id, -1)}>
-                        <Minus size={14} />
+                        <Minus size={12} />
                       </button>
-                      <span>{item.quantity}</span>
+                      <span className="qty-text">{item.quantity}</span>
                       <button className="qty-btn" onClick={() => updateQuantity(item.id, 1)}>
-                        <Plus size={14} />
+                        <Plus size={12} />
                       </button>
                       
                       <button className="remove-btn" onClick={() => removeFromCart(item.id)} title="Remover">
@@ -334,8 +599,8 @@ function App() {
           {cart.length > 0 && (
             <div className="cart-footer">
               <button className="whatsapp-btn" onClick={sendToWhatsApp}>
-                <Send size={20} />
-                Solicitar via WhatsApp
+                <Send size={18} />
+                Enviar Pedido no WhatsApp
               </button>
             </div>
           )}
@@ -343,15 +608,26 @@ function App() {
         </div>
       </div>
 
-      {/* Mobile Floating Cart Button (FAB) */}
-      <button className="cart-button-fab" onClick={() => setIsCartOpen(true)} aria-label="Carrinho">
-        <ShoppingCart size={24} />
-        {cartItemsCount > 0 && <span className="cart-badge">{cartItemsCount}</span>}
+      {/* Mobile Floating Cart Button */}
+      {cartItemsCount > 0 && (
+        <button className="cart-button-fab" onClick={() => setIsCartOpen(true)} aria-label="Carrinho">
+          <ShoppingCart size={24} />
+          <span className="cart-badge">{cartItemsCount}</span>
+        </button>
+      )}
+
+      {/* Floating WhatsApp Action Button */}
+      <button 
+        className="whatsapp-floating-btn" 
+        onClick={() => quickWhatsAppMessage("Olá! Gostaria de tirar algumas dúvidas sobre os produtos do catálogo.")}
+        aria-label="Falar no WhatsApp"
+      >
+        <MessageCircle size={28} />
       </button>
 
       {/* Toast Notification */}
       {toast && (
-        <div className="toast-notification glass-panel" key={toast.id}>
+        <div className="toast-notification" key={toast.id}>
           <div className="toast-content">
             <span className="toast-message">{toast.message}</span>
           </div>
