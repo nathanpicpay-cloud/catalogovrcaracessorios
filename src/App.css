@@ -194,6 +194,11 @@
   box-shadow: 0 12px 30px rgba(255, 30, 30, 0.15);
 }
 
+.product-card:active {
+  transform: scale(0.97);
+  transition: transform 0.1s ease;
+}
+
 .product-icon-container {
   height: 180px;
   flex-shrink: 0;
@@ -458,6 +463,73 @@
   font-size: 0.9rem;
   color: #aaa;
   border: 1px solid rgba(255,255,255,0.05);
+}
+
+/* Related Products in Modal */
+.modal-related {
+  margin-top: 2.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding-top: 1.5rem;
+}
+
+.modal-related h4 {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.8rem;
+}
+
+.related-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: var(--transition);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--surface-border);
+  text-align: center;
+  min-height: 100px;
+}
+
+.related-item:hover {
+  border-color: var(--neon-red);
+  background: rgba(255, 30, 30, 0.05);
+  transform: translateY(-3px);
+}
+
+.related-item:active {
+  transform: scale(0.97);
+}
+
+.related-icon {
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+  filter: drop-shadow(0 0 5px var(--neon-red-dim));
+}
+
+.related-item:hover .related-icon {
+  color: var(--neon-red);
+  filter: drop-shadow(0 0 8px var(--neon-red-glow));
+}
+
+.related-name {
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.2;
 }
 
 .modal-footer {
@@ -829,5 +901,92 @@
   
   .modal-overlay.open .modal-content {
     transform: translateY(0);
+  }
+
+  .related-grid {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  
+  .related-item {
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 0.8rem;
+    min-height: auto;
+    text-align: left;
+    gap: 0.8rem;
+  }
+  
+  .related-icon {
+    margin-bottom: 0;
+    flex-shrink: 0;
+  }
+  
+  .related-name {
+    -webkit-line-clamp: 1;
+  }
+
+  /* Toast no topo no Mobile */
+  .toast-notification {
+    bottom: auto;
+    top: 1.5rem;
+    animation: slideDownFade 0.4s cubic-bezier(0.16, 1, 0.3, 1), fadeOut 0.4s ease 3.6s forwards;
+  }
+}
+
+/* Toast Notification Style (Desktop/Global) */
+.toast-notification {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2000;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  background: rgba(15, 15, 15, 0.9);
+  border: 1px solid var(--neon-red);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px var(--neon-red-dim);
+  animation: slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1), fadeOut 0.4s ease 3.6s forwards;
+  pointer-events: none;
+  max-width: 90vw;
+  width: 450px;
+  text-align: center;
+}
+
+.toast-message {
+  color: white;
+  font-weight: 500;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+@keyframes slideUpFade {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 20px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+@keyframes slideDownFade {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -20px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
   }
 }

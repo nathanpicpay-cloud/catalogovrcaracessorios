@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import './App.css';
 import productsData from './data/products.json';
 import { 
@@ -31,6 +31,34 @@ function App() {
   const [cart, setCart] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [toast, setToast] = useState(null);
+
+  const toastMessages = [
+    "Ótima escolha! Que tal adicionar mais produtos para ter descontos?",
+    "Excelente item! Adicione mais produtos e garanta uma oferta especial.",
+    "Muito bem! Peça mais itens para termos mais flexibilidade no orçamento.",
+    "Produto adicionado! Fale conosco no WhatsApp para negociar preços especiais."
+  ];
+
+  useEffect(() => {
+    if (toast) {
+      const timer = setTimeout(() => setToast(null), 4000);
+      return () => clearTimeout(timer);
+    }
+  }, [toast]);
+
+  const showToastNotification = () => {
+    const randomIndex = Math.floor(Math.random() * toastMessages.length);
+    const message = toastMessages[randomIndex];
+    setToast({ id: Date.now(), message });
+  };
+
+  const relatedProducts = useMemo(() => {
+    if (!selectedProduct) return [];
+    return productsData
+      .filter(p => p.category === selectedProduct.category && p.id !== selectedProduct.id)
+      .slice(0, 3);
+  }, [selectedProduct]);
 
   // Extract unique categories
   const categories = ['Todos', ...new Set(productsData.map(p => p.category))];
@@ -64,6 +92,7 @@ function App() {
       }
       return [...prev, { ...product, quantity: 1 }];
     });
+    showToastNotification();
   };
 
   const updateQuantity = (id, delta) => {
@@ -218,6 +247,27 @@ function App() {
                   </ul>
                 </div>
               )}
+
+              {/* Related Products */}
+              {relatedProducts.length > 0 && (
+                <div className="modal-related">
+                  <h4>Quem viu este item também se interessou por:</h4>
+                  <div className="related-grid">
+                    {relatedProducts.map(p => (
+                      <div 
+                        key={p.id} 
+                        className="related-item glass-panel"
+                        onClick={() => setSelectedProduct(p)}
+                      >
+                        <CategoryIcon category={p.category} size={28} className="related-icon" />
+                        <div className="related-info">
+                          <span className="related-name">{p.name}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
             
             <div className="modal-footer">
@@ -298,6 +348,15 @@ function App() {
         <ShoppingCart size={24} />
         {cartItemsCount > 0 && <span className="cart-badge">{cartItemsCount}</span>}
       </button>
+
+      {/* Toast Notification */}
+      {toast && (
+        <div className="toast-notification glass-panel" key={toast.id}>
+          <div className="toast-content">
+            <span className="toast-message">{toast.message}</span>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
