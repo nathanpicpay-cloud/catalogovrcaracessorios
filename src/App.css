@@ -51,6 +51,10 @@
   background: rgba(255, 30, 30, 0.1);
 }
 
+.cart-button-fab {
+  display: none;
+}
+
 .cart-badge {
   position: absolute;
   top: -8px;
@@ -176,7 +180,6 @@
   overflow: hidden;
   transition: var(--transition);
   position: relative;
-  height: 100%;
   cursor: pointer;
   background: linear-gradient(145deg, rgba(20,20,20,0.8) 0%, rgba(10,10,10,0.9) 100%);
 }
@@ -189,6 +192,7 @@
 
 .product-icon-container {
   height: 180px;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -226,7 +230,7 @@
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
-  flex: 1;
+  flex: 1 0 auto;
 }
 
 .product-title {
@@ -688,6 +692,7 @@
   
   .product-icon-container {
     height: 120px;
+    flex-shrink: 0;
   }
   
   /* Ajustes na barra superior */
@@ -709,9 +714,14 @@
   .modal-specs ul {
     grid-template-columns: 1fr;
   }
+
+  .desktop-cart-btn {
+    display: none !important;
+  }
   
-  /* Botão do carrinho como FAB (Floating Action Button) no Android */
-  .cart-button {
+  /* Botão do carrinho como FAB (Floating Action Button) no Android/iOS */
+  .cart-button-fab {
+    display: flex;
     position: fixed;
     bottom: 2rem;
     right: 1.5rem;
@@ -720,28 +730,75 @@
     height: 60px;
     border-radius: 50%;
     padding: 0;
+    align-items: center;
     justify-content: center;
     background: var(--neon-red);
+    color: white;
     box-shadow: 0 5px 20px rgba(255, 30, 30, 0.4);
+    border: none;
   }
   
-  .cart-text-btn {
-    display: none;
-  }
-  
-  .cart-badge {
+  .cart-button-fab .cart-badge {
+    position: absolute;
     top: 0px;
     right: 0px;
-    width: 20px;
-    height: 20px;
-    font-size: 0.7rem;
+    background: var(--neon-red);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: bold;
+    height: 22px;
+    width: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
     border: 2px solid var(--bg-color);
+    box-shadow: 0 0 10px var(--neon-red-glow);
   }
 
-  /* Carrinho em Tela Cheia no Android */
+  /* Carrinho como Bottom Sheet Premium no Mobile */
+  .cart-overlay {
+    align-items: flex-end; /* Alinha o modal na base da tela */
+    padding: 0;
+  }
+  
   .cart-modal {
     max-width: 100%;
+    height: 80vh; /* Ocupa 80% da altura da tela */
+    border-radius: 24px 24px 0 0;
     border-left: none;
+    border-top: 1px solid var(--neon-red-dim);
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  
+  .cart-overlay.open .cart-modal {
+    transform: translateY(0);
+  }
+  
+  /* Melhoria nos Touch Targets para Mobile */
+  .close-btn {
+    width: 44px;
+    height: 44px;
+  }
+  
+  .modal-close {
+    width: 44px;
+    height: 44px;
+  }
+  
+  .qty-btn {
+    width: 38px;
+    height: 38px;
+  }
+  
+  .cart-item-actions {
+    gap: 1.2rem;
+  }
+
+  .filter-btn {
+    padding: 0.8rem 1.4rem;
+    font-size: 0.95rem;
   }
   
   /* Bottom Sheet Modal para os Detalhes do Produto */

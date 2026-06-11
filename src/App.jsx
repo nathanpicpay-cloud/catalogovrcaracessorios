@@ -35,13 +35,22 @@ function App() {
   // Extract unique categories
   const categories = ['Todos', ...new Set(productsData.map(p => p.category))];
 
-  // Filter products
+  // Filter and sort products (Group by category, then sort by name)
   const filteredProducts = useMemo(() => {
-    return productsData.filter(product => {
+    const filtered = productsData.filter(product => {
       const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
                             product.description.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesCategory = activeCategory === 'Todos' || product.category === activeCategory;
       return matchesSearch && matchesCategory;
+    });
+
+    return [...filtered].sort((a, b) => {
+      const catA = a.category || '';
+      const catB = b.category || '';
+      if (catA !== catB) {
+        return catA.localeCompare(catB);
+      }
+      return a.name.localeCompare(b.name);
     });
   }, [searchTerm, activeCategory]);
 
@@ -107,7 +116,7 @@ function App() {
           <h1 className="logo-text">VR<span>Car</span></h1>
         </div>
         
-        <button className="cart-button neon-border" onClick={() => setIsCartOpen(true)}>
+        <button className="cart-button desktop-cart-btn neon-border" onClick={() => setIsCartOpen(true)}>
           <ShoppingCart size={20} />
           <span className="cart-text-btn">Carrinho</span>
           {cartItemsCount > 0 && <span className="cart-badge">{cartItemsCount}</span>}
@@ -298,7 +307,12 @@ function App() {
           
         </div>
       </div>
-      
+
+      {/* Mobile Floating Cart Button (FAB) */}
+      <button className="cart-button-fab" onClick={() => setIsCartOpen(true)} aria-label="Carrinho">
+        <ShoppingCart size={24} />
+        {cartItemsCount > 0 && <span className="cart-badge">{cartItemsCount}</span>}
+      </button>
     </div>
   );
 }
