@@ -149,12 +149,12 @@ function App() {
     
     message += `%0AAguardo retorno para obter o orçamento e finalizar o pedido, obrigado!`;
     
-    const phoneNumber = "5575992537557"; 
+    const phoneNumber = "5575998517257"; 
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
   };
 
   const quickWhatsAppMessage = (text) => {
-    const phoneNumber = "5575992537557";
+    const phoneNumber = "5575998517257";
     window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(text)}`, '_blank');
   };
 
@@ -177,7 +177,6 @@ function App() {
           <a href="#inicio">Início</a>
           <a href="#como-funciona">Como Funciona</a>
           <a href="#catalogo">Catálogo</a>
-          <a href="#faq">Dúvidas</a>
         </div>
         
         <button className="cart-button desktop-cart-btn" onClick={() => setIsCartOpen(true)}>
@@ -387,42 +386,6 @@ function App() {
         </div>
       </section>
 
-      {/* FAQ Section */}
-      <section className="faq-section" id="faq">
-        <div className="section-header">
-          <div className="faq-header-icon-wrapper">
-            <HelpCircle size={24} className="faq-header-icon" />
-          </div>
-          <h2 className="section-title">DÚVIDAS <span>FREQUENTES</span></h2>
-          <p className="section-subtitle">
-            Tudo o que você precisa saber sobre a VR Acessórios.
-          </p>
-        </div>
-
-        <div className="faq-accordion-container">
-          {faqs.map((faq, index) => {
-            const isOpen = openFaq === index;
-            return (
-              <div 
-                key={index} 
-                className={`faq-item ${isOpen ? 'active' : ''}`}
-                onClick={() => toggleFaq(index)}
-              >
-                <div className="faq-question">
-                  <span>{faq.q}</span>
-                  <span className="faq-icon-toggle">
-                    {isOpen ? <Minus size={18} /> : <Plus size={18} />}
-                  </span>
-                </div>
-                <div className="faq-answer">
-                  <p>{faq.a}</p>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </section>
-
       {/* Footer */}
       <footer className="footer">
         <div className="footer-top">
@@ -447,7 +410,6 @@ function App() {
               <li><a href="#inicio">Início</a></li>
               <li><a href="#como-funciona">Como Funciona</a></li>
               <li><a href="#catalogo">Catálogo</a></li>
-              <li><a href="#faq">Dúvidas</a></li>
             </ul>
           </div>
 
@@ -455,7 +417,7 @@ function App() {
             <h4>CONTATO</h4>
             <ul>
               <li>
-                <Phone size={16} /> (75) 99253-7557
+                <Phone size={16} /> (75) 99851-7257
               </li>
               <li>
                 <MapPin size={16} /> Feira de Santana - BA
