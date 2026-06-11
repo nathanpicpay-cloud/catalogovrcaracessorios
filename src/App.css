@@ -1433,7 +1433,22 @@
   }
 
   .desktop-cart-btn {
+    display: flex !important;
+    padding: 0.5rem;
+    width: 42px;
+    height: 42px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+  }
+
+  .cart-text-btn {
     display: none;
+  }
+
+  .cart-badge {
+    top: -4px;
+    right: -4px;
   }
 
   .hero-title {
@@ -1459,7 +1474,7 @@
 @media (max-width: 580px) {
   .product-grid {
     grid-template-columns: 1fr 1fr;
-    gap: 0.8rem;
+    gap: 0.75rem;
   }
 
   .product-card {
@@ -1467,17 +1482,17 @@
   }
 
   .product-icon-container {
-    height: 120px;
+    height: 110px;
   }
 
   .product-content {
-    padding: 0.8rem;
+    padding: 0.75rem;
   }
 
   .product-title {
     font-size: 0.85rem;
     height: 2.4rem;
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.3rem;
   }
 
   .product-desc {
@@ -1485,11 +1500,100 @@
   }
 
   .product-footer {
-    padding-top: 0.6rem;
+    padding-top: 0.5rem;
+  }
+
+  .product-price-placeholder {
+    font-size: 0.75rem;
+  }
+
+  .add-btn-text {
+    display: none;
   }
 
   .add-to-cart-btn {
-    padding: 0.4rem 0.6rem;
-    font-size: 0.75rem;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cart-button-fab {
+    display: none !important;
+  }
+
+  .whatsapp-floating-btn {
+    width: 50px;
+    height: 50px;
+    bottom: 1.5rem;
+    right: 1.5rem;
+  }
+
+  .cart-modal {
+    max-width: 100%;
   }
 }
+
+@media (max-width: 480px) {
+  .hero-section {
+    padding: 4rem 5% 2.5rem;
+    gap: 2rem;
+  }
+
+  .hero-title {
+    font-size: 2.1rem;
+    line-height: 1.25;
+  }
+
+  .hero-subtitle {
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.6rem;
+  }
+
+  .btn-hero-primary, .btn-hero-secondary {
+    width: 100%;
+    justify-content: center;
+    padding: 0.8rem 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  .hero-bullets {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .steps-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .step-card {
+    padding: 1.5rem;
+  }
+
+  .cta-banner-text h4 {
+    font-size: 1.2rem;
+  }
+
+  .cta-banner-text p {
+    font-size: 0.85rem;
+  }
+
+  .btn-cta {
+    width: 100%;
+    text-align: center;
+    padding: 0.8rem 1.5rem;
+    font-size: 0.85rem;
+  }
+}
+

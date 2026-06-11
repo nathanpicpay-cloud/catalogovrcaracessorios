@@ -361,7 +361,7 @@ function App() {
                       onClick={(e) => addToCart(product, e)}
                       title="Adicionar ao Carrinho"
                     >
-                      <Plus size={18} /> Adicionar
+                      <Plus size={18} /> <span className="add-btn-text">Adicionar</span>
                     </button>
                   </div>
                 </div>
