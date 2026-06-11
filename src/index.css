@@ -24,12 +24,16 @@
   box-sizing: border-box;
 }
 
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 body {
   font-family: 'Outfit', system-ui, -apple-system, sans-serif;
   background-color: var(--bg-color);
   color: var(--text-primary);
   min-height: 100vh;
-  overflow-x: hidden;
   background-image: 
     radial-gradient(circle at 15% 50%, var(--neon-red-dim), transparent 25%),
     radial-gradient(circle at 85% 30%, var(--neon-red-dim), transparent 25%);
