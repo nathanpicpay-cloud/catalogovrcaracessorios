@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from 'react';
 import './App.css';
-import productsData from './data/products.json';
+import rawProductsData from './data/products.json';
 import { 
   ShoppingCart, Search, Wrench, X, Plus, Minus, Trash2, Send,
   Settings, Disc, Circle, CircleDashed, Nut, Droplet, 
@@ -8,6 +8,69 @@ import {
   MessageCircle, HelpCircle, ArrowRight, Truck, ClipboardList, CheckCircle2,
   Mail, Phone, MapPin
 } from 'lucide-react';
+
+const productsData = rawProductsData.map(p => {
+  const name = p.name.toUpperCase();
+  const currentCat = p.category ? p.category.toUpperCase() : '';
+
+  let newCat = p.category;
+
+  if (name.includes('ANEL CENTRALIZADOR') || name.includes('ANEL CE')) {
+    newCat = 'Anel Centralizador';
+  } else if (
+    name.includes('COLA') || 
+    name.includes('CIMENTO') || 
+    name.includes('VULK') || 
+    name.includes('VULCAFLEX') || 
+    name.includes('VIPAL') || 
+    name.includes('CAMERA DE AR') || 
+    name.includes('CAMERA DE CARRO') || 
+    name.includes('MANCHÃO') || 
+    name.includes('MANCHÕES') || 
+    name.includes('MANCHAO') || 
+    name.includes('REPARO A QUENTE') || 
+    name.includes('VULCANITE') || 
+    name.includes('VALVULA') || 
+    name.includes('VÁLVULA') || 
+    name.includes('VALVULAS') || 
+    name.includes('BICO') ||
+    name.includes('REMENDO') ||
+    name.includes('MACARRÃO') ||
+    name.includes('BORRACHARIA') ||
+    name.includes('SOQUETE') || 
+    name.includes('IMPACTO') || 
+    name.includes('CHAVE') ||
+    name.includes('CONTRAPESO') || 
+    name.includes('CHUMBO') ||
+    name.includes('PESO') ||
+    name.includes('CALIBRADOR')
+  ) {
+    newCat = 'Borracharia';
+  } else if (name.includes('CALOTA') || name.includes('SUB CALOTA')) {
+    newCat = 'Calotas';
+  } else if (name.includes('EMBLEMA')) {
+    newCat = 'Acessórios';
+  } else if (name.includes('PARAFUSO') || name.includes('PRISIONEIRO') || name.includes('CALCO') || name.includes('CALÇO')) {
+    newCat = 'Parafusos';
+  } else if (name.includes('PORCA')) {
+    newCat = 'Porcas';
+  } else if (name.includes('BALANCEDORA') || name.includes('DESMONTADORA') || name.includes('ALINHADOR') || name.includes('MÁQUINA') || name.includes('MAQUINA')) {
+    newCat = 'Máquinas';
+  } else {
+    if (currentCat.includes('MÁQUINA') || currentCat.includes('MAQUINA')) newCat = 'Máquinas';
+    else if (currentCat.includes('ANEL')) newCat = 'Anel Centralizador';
+    else if (currentCat.includes('BORRACHARIA')) newCat = 'Borracharia';
+    else if (currentCat.includes('CONTRAPESO')) newCat = 'Borracharia';
+    else if (currentCat.includes('PARAFUSO')) newCat = 'Parafusos';
+    else if (currentCat.includes('PORCA')) newCat = 'Porcas';
+    else if (currentCat.includes('VALVULA') || currentCat.includes('VÁLVULA')) newCat = 'Borracharia';
+    else if (currentCat.includes('EMBLEMA')) newCat = 'Acessórios';
+    else if (currentCat.includes('CALOTA')) newCat = 'Calotas';
+    else newCat = 'Diversos';
+  }
+
+  return { ...p, category: newCat };
+});
 
 // Helper component for category icons
 const CategoryIcon = ({ category, size = 48, className = "" }) => {
@@ -18,11 +81,9 @@ const CategoryIcon = ({ category, size = 48, className = "" }) => {
   else if (c.includes('calota')) IconComp = CircleDashed;
   else if (c.includes('anel')) IconComp = Circle;
   else if (c.includes('borracharia')) IconComp = Droplet;
-  else if (c.includes('contrapeso')) IconComp = Layers;
-  else if (c.includes('parafuso')) IconComp = Nut;
+  else if (c.includes('parafuso') || c.includes('prisioneiro')) IconComp = Nut;
   else if (c.includes('porca')) IconComp = Hexagon;
-  else if (c.includes('valvula') || c.includes('válvula')) IconComp = Disc;
-  else if (c.includes('emblema')) IconComp = Tag;
+  else if (c.includes('acessório') || c.includes('acessorio') || c.includes('emblema')) IconComp = Tag;
 
   return <IconComp size={size} className={className} />;
 };
